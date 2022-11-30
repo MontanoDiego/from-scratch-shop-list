@@ -10,3 +10,9 @@
     - id
     - item
     - bought (bool default false)
+
+3. fetch
+    - fetch all
+    - delete all
+    - create item
+    - buy item (bool state change)

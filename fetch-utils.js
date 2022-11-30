@@ -27,3 +27,51 @@ export async function signOutUser() {
 }
 
 /* Data functions */
+
+const user = client.auth.user();
+
+export async function fetchAllItems() {
+    const response = await client
+        .from('shoplist')
+        .select()
+        .order('item')
+        .match({ user_id: user.id });
+
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
+
+export async function createItem(item) {
+    const response = await client
+        .from('shoplist')
+        .insert({ item });
+
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
+
+export async function deleteAllItems() {
+    const response = await client
+        .from('shoplist')
+        .delete()
+        .match({ user_id: user.id });
+
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
+
+
+
+
+/* test console logs */
+
+// console.log('response', fetchAllItems());

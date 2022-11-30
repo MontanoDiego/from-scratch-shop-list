@@ -3,6 +3,9 @@
 import './auth/user.js';
 
 /* Get DOM Elements */
+const form = document.getElementById('add-item');
+const shopList = document.getElementById('shop-list');
+const deleteBtn = document.getElementById('delete-button');
 
 /* State */
 
