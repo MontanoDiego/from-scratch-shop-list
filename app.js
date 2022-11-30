@@ -1,7 +1,7 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
-import { buyItem, checkAuth, createItem, fetchAllItems } from './fetch-utils.js';
+import { buyItem, checkAuth, createItem, deleteAllItems, fetchAllItems } from './fetch-utils.js';
 import { renderItem } from './render-utils.js';
 
 /* Get DOM Elements */
@@ -52,4 +52,9 @@ itemForm.addEventListener('submit', async (i) => {
     } else {
         shopList.textContent = 'Error adding item';
     }
+});
+
+deleteBtn.addEventListener('click', async () => {
+    await deleteAllItems();
+    await displayItems();
 });
