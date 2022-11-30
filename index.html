@@ -32,7 +32,7 @@
 <body>
     <header class="page-header">
         <img class="logo" src="/assets/html_css_js.png" alt="logo">
-        <p class="title">Supabase Web App</p>
+        <p class="title">Shoplist!</p>
         <nav>
             <a href="/">Home</a>
             <a id="sign-out-link" href="auth">Sign Out</a>
@@ -40,7 +40,13 @@
     </header>
 
     <main>
-
+        <form id="add-item">
+            <label>Add a Shopping Item!</label>
+            <input name="item" />
+            <button type="submit">Add</button>
+        </form>
+        <ul id="shop-list"></ul>
+        <button type="button" id="delete-button">Delete All</button>
     </main>
 
 </body>
