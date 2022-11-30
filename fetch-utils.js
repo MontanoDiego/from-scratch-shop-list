@@ -5,7 +5,7 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 /* Auth related functions */
 
 export function getUser() {
-    return client.auth.user();
+    return client.auth.session() && client.auth.session().user;
 }
 
 export async function signUpUser(email, password) {
@@ -28,14 +28,12 @@ export async function signOutUser() {
 
 /* Data functions */
 
-const user = client.auth.user();
-
 export async function fetchAllItems() {
     const response = await client
-        .from('shoplist')
-        .select()
+        .from('shoplist2')
+        .select('*')
         .order('item')
-        .match({ user_id: user.id });
+        .match({ user_id: getUser().id });
 
     if (response.error) {
         console.error(response.error.message);
@@ -46,7 +44,7 @@ export async function fetchAllItems() {
 
 export async function createItem(item) {
     const response = await client
-        .from('shoplist')
+        .from('shoplist2')
         .insert({ item });
 
     if (response.error) {
@@ -58,9 +56,9 @@ export async function createItem(item) {
 
 export async function deleteAllItems() {
     const response = await client
-        .from('shoplist')
+        .from('shoplist2')
         .delete()
-        .match({ user_id: user.id });
+        .match({ user_id: getUser().id });
 
     if (response.error) {
         console.error(response.error.message);
@@ -69,9 +67,13 @@ export async function deleteAllItems() {
     }
 }
 
+export function checkAuth() {
+    const user = getUser();
 
+    if (!user) location.replace('./auth');
+}
 
 
 /* test console logs */
 
-// console.log('response', fetchAllItems());
+console.log('response', fetchAllItems());

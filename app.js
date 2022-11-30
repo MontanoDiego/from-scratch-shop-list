@@ -1,11 +1,11 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
-import { fetchAllItems } from './fetch-utils.js';
+import { checkAuth, createItem, fetchAllItems } from './fetch-utils.js';
 import { renderItem } from './render-utils.js';
 
 /* Get DOM Elements */
-const form = document.getElementById('add-item');
+const itemForm = document.getElementById('add-item');
 const shopList = document.getElementById('shop-list');
 const deleteBtn = document.getElementById('delete-button');
 
@@ -15,19 +15,40 @@ const deleteBtn = document.getElementById('delete-button');
 
 /* Display Functions */
 
+checkAuth();
 
 async function displayItems() {
     shopList.innerHTML = '';
 
     const items = await fetchAllItems();
-    const handleBought = items.bought;
 
     if (items) {
         for (let item of items) {
-            const itemEl = renderItem(item, handleBought);
+            const itemEl = renderItem(item);
             itemEl.addEventListener('click', async () => {
                 console.log('clicked!');
             });
+            shopList.append(itemEl);
         }
     }
 }
+
+window.addEventListener('load', async () => {
+    await displayItems();
+});
+
+
+itemForm.addEventListener('submit', async (i) => {
+    i.preventDefault();
+
+    const data = new FormData(itemForm);
+    const item = data.get('item');
+    itemForm.reset();
+
+    const newItem = await createItem(item);
+    if (newItem) {
+        displayItems();
+    } else {
+        shopList.textContent = 'Error adding item';
+    }
+});
