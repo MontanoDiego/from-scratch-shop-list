@@ -1,6 +1,8 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
+import { fetchAllItems } from './fetch-utils.js';
+import { renderItem } from './render-utils.js';
 
 /* Get DOM Elements */
 const form = document.getElementById('add-item');
@@ -12,3 +14,20 @@ const deleteBtn = document.getElementById('delete-button');
 /* Events */
 
 /* Display Functions */
+
+
+async function displayItems() {
+    shopList.innerHTML = '';
+
+    const items = await fetchAllItems();
+    const handleBought = items.bought;
+
+    if (items) {
+        for (let item of items) {
+            const itemEl = renderItem(item, handleBought);
+            itemEl.addEventListener('click', async () => {
+                console.log('clicked!');
+            });
+        }
+    }
+}

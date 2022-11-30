@@ -69,3 +69,11 @@ main {
 .hidden {
     display: none;
 }
+
+.bought {
+    color: red;
+}
+
+.not-bought {
+    border: 3px solid black;
+}
