@@ -89,4 +89,4 @@ export function checkAuth() {
 
 /* test console logs */
 
-console.log('response', fetchAllItems());
+// console.log('response', fetchAllItems());
