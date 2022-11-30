@@ -67,6 +67,19 @@ export async function deleteAllItems() {
     }
 }
 
+export async function buyItem(item) {
+    const response = await client
+        .from('shoplist2')
+        .update({ bought: true })
+        .match({ id: item.id });
+
+    if (response.error) {
+        console.error(response.error.message);
+    } else {
+        return response.data;
+    }
+}
+
 export function checkAuth() {
     const user = getUser();
 
